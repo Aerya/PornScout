@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PornScout
 // @namespace    aerya-qbit-direct
-// @version      3.5.4
+// @version      3.5.5
 // @description  Adult release quality checker, multi-client BitTorrent helper and cross-tracker scout.
 // @homepageURL   https://github.com/Aerya/PornScout
 // @supportURL    https://github.com/Aerya/PornScout/issues
@@ -18,6 +18,8 @@
 // @match        https://www.happyfappy.net/*
 // @match        https://empornium.sx/*
 // @match        https://www.empornium.sx/*
+// @match        https://dirtybytes.net/*
+// @match        https://www.dirtybytes.net/*
 // @match        https://emparadise.rs/*
 // @match        https://www.emparadise.rs/*
 //
@@ -38,7 +40,7 @@
 (function () {
     "use strict";
 
-    const SCRIPT_VERSION = "3.5.4";
+    const SCRIPT_VERSION = "3.5.5";
     const STORAGE_KEY = "qbit-direct-config-v2";
     const UI_LANG_KEY = "pornscout-ui-language";
     const CONFIG_VIEW_KEY = "pornscout-config-view";
@@ -93,7 +95,8 @@
             emparadise: true,
             sextorrent: true,
             bitporn: true,
-            exoticaz: true
+            exoticaz: true,
+            dirtybytes: true
         },
 
         // Préférences d'upgrade
@@ -169,6 +172,14 @@
             faviconPage: "https://bitporn.eu/",
             engine: "generic",
             searchStyle: "name"
+        },
+        {
+            id: "dirtybytes",
+            label: "DirtyBytes",
+            base: "https://dirtybytes.net",
+            faviconPage: "https://dirtybytes.net/",
+            engine: "generic",
+            searchStyle: "dirtybytes"
         },
         {
             id: "exoticaz",
@@ -4985,6 +4996,12 @@
                 // SexTorrent / BitPorn
                 return [
                     `${provider.base}/torrents?name=${q}`
+                ];
+
+            case "dirtybytes":
+                // Recherche web, sans API Torznab ni secret d'accès.
+                return [
+                    `${provider.base}/search?search=${q}&dead=false&page=1&category=&content_type=&resolution=&genre_match=any&content_categories=&excluded_genres=&excluded_categories=&content_tags=&studio=&performers=&release_year=&runtime_minutes=&backdrop_url=&studio_match=&performers_match=&viewMode=table&sort=d&order=desc`
                 ];
 
             case "exoticaz":
