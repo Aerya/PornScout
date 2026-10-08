@@ -43,6 +43,9 @@ PornScout is not a BitTorrent client, a tracker, or a centralized indexer.
 - SexTorrent
 - BitPorn
 - ExoticaZ
+- DirtyBytes
+
+**DirtyBytes** uses its web search (`/search?search=...`) and PornScout’s generic HTML parser. An authenticated session is required. Result parsing still needs confirmation against an authenticated page; no Torznab API is required.
 
 PornScout does not bypass authentication, invitations or access restrictions. To use a private tracker, you must have a valid account, access to that tracker, and an active browser session where PornScout is installed.
 
