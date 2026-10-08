@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         PornScout
 // @namespace    aerya-qbit-direct
-// @version      3.5.5
+// @version      3.5.6
 // @description  Adult release quality checker, multi-client BitTorrent helper and cross-tracker scout.
 // @homepageURL   https://github.com/Aerya/PornScout
 // @supportURL    https://github.com/Aerya/PornScout/issues
@@ -40,7 +40,7 @@
 (function () {
     "use strict";
 
-    const SCRIPT_VERSION = "3.5.5";
+    const SCRIPT_VERSION = "3.5.6";
     const STORAGE_KEY = "qbit-direct-config-v2";
     const UI_LANG_KEY = "pornscout-ui-language";
     const CONFIG_VIEW_KEY = "pornscout-config-view";
@@ -6157,9 +6157,8 @@
                 ${renderSearchResults(searches)}
 
                 <div class="qbd-actions">
-                    <button class="qbd-btn ${needsDecision ? "" : "qbd-btn-primary"}"
-                            id="qbd-panel-close">
-                        ${needsDecision ? escapeHtml(t("cancel")) : "Fermer"}
+                    <button class="qbd-btn" id="qbd-panel-close">
+                        ${escapeHtml(t("cancel"))}
                     </button>
                 </div>
             `);
@@ -6187,9 +6186,7 @@
 
             overlay.querySelector("#qbd-panel-close").addEventListener("click", () => {
                 overlay.remove();
-                resolve({
-                    action: needsDecision ? "cancel" : "close"
-                });
+                resolve({ action: "cancel" });
             });
         });
     }
@@ -6644,16 +6641,10 @@
                     }
 
                     decisionHandledByPanel = true;
-                } else if (
-                    betterTrackerResults.length > 0 ||
-                    existingNotWorse ||
-                    (
-                        CONFIG.warnBelowMinimum &&
-                        qualityGateTriggered
-                    )
-                ) {
-                    // A decision was required: closing/cancelling without
-                    // choosing a client must never send the current torrent.
+                } else {
+                    // Explicit consent is always required when this panel opened.
+                    // Closing it must never fall through to the default client.
+                    notify("Téléchargement annulé", "warning");
                     return;
                 }
             }
